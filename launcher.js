@@ -1,4 +1,4 @@
 
-/*function attach(body){
+function attach(body){
     this.sling.bodyA = body;
-}*/
+}

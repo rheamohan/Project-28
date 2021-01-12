@@ -30,18 +30,17 @@ function setup() {
 	//Bodies
 	ground = new Ground(750,680,1500,25);
 
-	mango1 = new Mango(995,260);
-	mango2 = new Mango(1270,95);
-	mango3 = new Mango(1190,160);
-	mango4 = new Mango(1090,320);
+	mango1 = new Mango(995,260,60,60);
+	mango2 = new Mango(1270,95,60,60);
+	mango3 = new Mango(1190,160,60,60);
+	mango4 = new Mango(1090,320,60,60);
+	mango5 = new Mango(1190,250,60,60);
+	mango6 = new Mango(1370,220,60,60);
+	mango7 = new Mango(1080,190,60,60);
+	mango8 = new Mango(1300,320,60,60);
+	mango9 = new Mango(1290,240,60,60);
 
-	mango5 = new Mango(1190,250);
-	mango6 = new Mango(1370,220);
-	mango7 = new Mango(1080,190);
-	mango8 = new Mango(1300,320);
-	mango9 = new Mango(1290,240);
-
-	stone = new Stone(170,545);
+	stone = new Stone(195,545,30,30);
 
 	sling = new Sling(stone.body,{x:180, y:40});
 
@@ -99,6 +98,7 @@ function mouseDragged(){
 function mouseReleased(){
 	sling.fly();
 Matter.Body.applyForce(stone.body,stone.body.position,{x:20,y:-383});
+
 }
 
 function detectCollision(lstone,lmango){
@@ -107,7 +107,7 @@ function detectCollision(lstone,lmango){
 
 var distance = dist(stoneBodyPosition.x,stoneBodyPosition.y,mangoBodyPosition.x,mangoBodyPosition.y);
 	if(distance<-lmango.r+lstone.r){
-		Matter.Body.isStatic(lmango.body,false);
+		Matter.Body.setStatic(lmango.body,false);
 	}
 }
 

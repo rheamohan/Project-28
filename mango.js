@@ -1,11 +1,12 @@
 class Mango{
-    constructor(x,y){
+    constructor(x,y,radius){
         var options={
             isStatic:true,
-            resititution:0.2,
+            resititution:0,
             friction:1
         }
-        this.body = Bodies.rectangle(x,y,options);
+        this.body = Bodies.circle(x,y,radius,options);
+        this.radius = radius;
         this.image = loadImage("Sprites/mango.png");
         this.image.scale = 0.2;
         World.add(world,this.image);
@@ -15,7 +16,7 @@ class Mango{
         var pos = this.body.position;
         push ();
         imageMode(CENTER);
-        image(this.image,pos.x,pos.y,60,60);
+        image(this.image,pos.x,pos.y,this.radius,this.radius);
         pop ();
     }  
 }
