@@ -5,7 +5,7 @@ const Bodies = Matter.Bodies;
 const Body = Matter.Body;
 const Constraint = Matter.Constraint;
 
-var enigine,world;
+var engine,world;
 
 var ground;
 var boy,boyImg;
@@ -42,13 +42,14 @@ function setup() {
 
 	stone = new Stone(195,545,30,30);
 
-	sling = new Sling(stone.body,{x:180, y:40});
+	// A SLING (line) 
+	sling = new Sling(stone.body,{x:235, y:550});
 
 	tree = createSprite(1200,375);
 	tree.scale = 0.5;
 	tree.addImage(treeImg);
 
-	boy = createSprite(250,604);
+	boy = createSprite(290,604);
 	boy.scale = 0.1;
 	boy.addImage(boyImg);
 
@@ -62,6 +63,7 @@ function draw() {
   
   Engine.update(engine);
 
+// STONE AND MANGO SHOULD COLLIDE WITH EACH OTHER
   detectCollision(stone,mango1);
   detectCollision(stone,mango2);
   detectCollision(stone,mango3);
@@ -71,8 +73,7 @@ function draw() {
   detectCollision(stone,mango7);
   detectCollision(stone,mango8);
   detectCollision(stone,mango9);
-  
-  
+
   drawSprites();
 
   mango1.display();
@@ -91,25 +92,42 @@ function draw() {
   
 }
 
+// WHEN MOUSE IS DRAGGED STONE.BODY SHOULD MOVE ACC. TO THE MOUSE
 function mouseDragged(){
-    Matter.Body.setPosition(stone.body,{x: mouseX,y: mouseY});
+    Matter.Body.setPosition(stone.body,{x:mouseX,y:mouseY});
 }
 
-function mouseReleased(){
+//WHEN MOUSE IS RELEASED THE FORCE SHOULD BE APPLIED ON STONE's BODY 
+//AND ITs POSITION. ACCORDING TO THE x And y COORDINATES
+	function mouseReleased(){
+	//SLING's VALUE SHOULD BE NULL (check ling.js)
 	sling.fly();
-Matter.Body.applyForce(stone.body,stone.body.position,{x:20,y:-383});
+	Matter.Body.applyForce(stone.body,stone.body.position,{x:20,y:-10});
 
 }
 
+//dectectCollision on lstone and lmango
+
+// mango and stoneBody's Position is equal to lmango and lstone body's
+// position
 function detectCollision(lstone,lmango){
 	mangoBodyPosition = lmango.body.position;
 	stoneBodyPosition = lstone.body.position;
 
+// DISTANCE = STONE AND MONGO BODY'S x AND y POSITION
 var distance = dist(stoneBodyPosition.x,stoneBodyPosition.y,mangoBodyPosition.x,mangoBodyPosition.y);
-	if(distance<-lmango.r+lstone.r){
-		Matter.Body.setStatic(lmango.body,false);
+
+//STONE AND MONGO BODY'S x AND y POSITION(distance) IS EQUAL TO 45 THEN
+//lmango.body IS NOT STATIC;
+	if(distance<=45){
+	Matter.Body.setStatic(lmango.body,false);
 	}
 }
 
-
-
+// IF 32=SPACE KEY IS PRESSED THEN SLING SHOULD ATTACH
+	function keyPressed(){
+		if (keyCode===32){
+			//SEE SLING.JS
+			sling.attach(stone.body);
+		}
+	}

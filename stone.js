@@ -1,12 +1,12 @@
 class Stone{
-    constructor(x,y,radius){
+    constructor(x,y,radius,height){
         var options={
             isStatic:false,
             resititution:0,
             friction:1,
             density:1.2
         }
-        this.body = Bodies.circle(x,y,radius,options);
+        this.body = Bodies.circle(x,y,radius/2,options);
         this.radius = radius;
         this.image = loadImage("Sprites/stone.png");
         World.add(world,this.body);
@@ -17,8 +17,10 @@ class Stone{
     display(){
         var pos = this.body.position;
         push();
+        translate(pos.x,pos.y);
+        rotate(this.body.angle);
         imageMode(CENTER);
-        image(this.image,pos.x,pos.y,this.radius,this.radius);
+        image(this.image,0,0,this.radius,this.radius);
         pop();
     }
 }
